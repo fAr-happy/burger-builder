@@ -21,7 +21,6 @@ const Burger = props => {
     <div className={styles.Burger}>
       <BurgerIngredient type="bread-top" />
       {transformedIngredients}
-      {console.log(transformedIngredients)}
       <BurgerIngredient type="bread-bottom" />
     </div>
   );
