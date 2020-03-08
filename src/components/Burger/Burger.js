@@ -4,7 +4,7 @@ import BurgerIngredient from "./BurgerIngredient/BurgerIngredient";
 const Burger = () => {
   return (
     <div>
-      <BurgerIngredient type="bread-bottom" />
+      <BurgerIngredient  />
     </div>
   );
 };
