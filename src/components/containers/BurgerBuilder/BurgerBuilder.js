@@ -27,7 +27,6 @@ class BurgerBuilder extends React.Component {
 
   updatePurchasedState = ingredients => {
     let purchasable = Object.values(ingredients).reduce((a, b) => a + b) > 0;
-    console.log(purchasable);
     this.setState({
       purchasable: purchasable
     });
@@ -71,11 +70,14 @@ class BurgerBuilder extends React.Component {
     });
   };
 
-  hideModalHandler = () => {
+  purchaseCancelHandler = () => {
     this.setState({
       purchasing: false
     });
-    console.log('hide')
+  };
+
+  purchaseContinueHandler = () => {
+    alert("Continued");
   };
 
   render() {
@@ -86,8 +88,15 @@ class BurgerBuilder extends React.Component {
 
     return (
       <Aux>
-        <Modal show={this.state.purchasing} hideModalHandler={this.hideModalHandler} show={this.state.purchasing}>
-          <OrderSummary ingredients={this.state.ingredients} />
+        <Modal
+          show={this.state.purchasing}
+          hideModalHandler={this.purchaseCancelHandler}
+        >
+          <OrderSummary
+            cancel={this.purchaseCancelHandler}
+            continue={this.purchaseContinueHandler}
+            ingredients={this.state.ingredients}
+          />
         </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
