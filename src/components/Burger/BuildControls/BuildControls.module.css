@@ -1,6 +1,14 @@
 .BuildControls {
   width: 100%;
-  background-color: #cf8f2e;
+  background: rgb(238, 174, 202);
+  background: linear-gradient(
+    270deg,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(200, 179, 215, 1) 42%,
+    rgba(195, 180, 217, 1) 48%,
+    rgba(182, 182, 221, 1) 62%,
+    rgba(148, 187, 233, 1) 100%
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
