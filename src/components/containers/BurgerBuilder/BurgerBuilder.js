@@ -25,8 +25,6 @@ class BurgerBuilder extends React.Component {
     purchasing: false
   };
 
- 
-
   updatePurchasedState = ingredients => {
     let purchasable = Object.values(ingredients).reduce((a, b) => a + b) > 0;
     this.setState({
@@ -116,5 +114,3 @@ class BurgerBuilder extends React.Component {
 }
 
 export default BurgerBuilder;
-
-
