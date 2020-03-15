@@ -120,7 +120,7 @@ class BurgerBuilder extends React.Component {
     for (let i in disabledInfo) {
       disabledInfo[i] = disabledInfo[i] <= 0;
     }
-    let mainContent = <Spinner/>;
+    let mainContent = <Spinner />;
     let orderSummary = (
       <OrderSummary
         cancel={this.purchaseCancelHandler}
@@ -132,8 +132,12 @@ class BurgerBuilder extends React.Component {
     if (this.state.loading) {
       orderSummary = <Spinner />;
     }
-    if ( this.state.hasIngredientsFailed) {
-      mainContent = <p style={{textAlign: 'center', marginTop: '200px'}}>Can't Get Ingredients, Please Reload the Page or</p>
+    if (this.state.hasIngredientsFailed) {
+      mainContent = (
+        <p style={{ textAlign: "center", marginTop: "200px" }}>
+          Can't Get Ingredients, Please Reload the Page or
+        </p>
+      );
     }
     if (this.state.ingredients) {
       mainContent = (
