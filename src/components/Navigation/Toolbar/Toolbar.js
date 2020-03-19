@@ -4,10 +4,12 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import DrawerToggle from "../SidaDrawer/DrawerToggle/DrawerToggle";
 
-const Toolbar = (props) => {
+
+
+const Toolbar = props => {
   return (
     <header className={styles.Toolbar}>
-      <DrawerToggle onClick={props.sideDrawerHandler}/> 
+      <DrawerToggle onClick={props.sideDrawerHandler} />
       <Logo />
       <nav className={styles.DesktopOnly}>
         <NavigationItems />
