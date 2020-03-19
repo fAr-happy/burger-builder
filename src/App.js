@@ -9,7 +9,7 @@ export default class App extends React.Component {
     return (
       <Layout>
         <Switch>
-          <Route path="/checkout" component={Checkout}  />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/" exact component={BurgerBuilder} />
         </Switch>
       </Layout>
