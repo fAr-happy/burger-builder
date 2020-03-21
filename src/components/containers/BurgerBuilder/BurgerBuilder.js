@@ -92,33 +92,29 @@ class BurgerBuilder extends React.Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({
-      loading: true
+    
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(
+        encodeURIComponent(i) +
+          "=" +
+          encodeURIComponent(this.state.ingredients[i])
+      );
+    }
+    queryParams.push( 'price=' + this.state.totalPrice );
+    
+    const queryString = queryParams.join('&')
+    
+    this.props.history.push({
+      pathname: "/checkout",
+      search: '?' + queryString
     });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Farshad Hassanpour",
-        address: {
-          street: "azadi",
-          zipCode: "446666",
-          country: "Iran"
-        },
-        email: "test@test.com"
-      },
-      deliveryMethod: "fastest"
-    };
-    axios
-      .post("/orders.json", order)
-      .then(r => this.setState({ loading: false, purchasing: false }))
-      .catch(e => this.setState({ loading: false, purchasing: false }));
-  };
+   };
 
   render() {
     const disabledInfo = { ...this.state.ingredients };
     for (let i in disabledInfo) {
-      disabledInfo[i] = disabledInfo[i] <= 0;
+      disabledInfo[i]  = disabledInfo[i] <= 0;
     }
     let mainContent = <Spinner />;
     let orderSummary = (
