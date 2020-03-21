@@ -39,10 +39,6 @@ class Orders extends React.Component {
             key={order.id}
             price={order.price}
             ingredinets={order.ingredients}
-            bacon={order.ingredients.bacon}
-            meat={order.ingredients.meat}
-            cheese={order.ingredients.cheese}
-            salad={order.ingredients.salad}
           />
         );
       });
