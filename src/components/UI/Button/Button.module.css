@@ -9,11 +9,19 @@
   margin: 10px;
   font-weight: bold;
 }
+.Button:disabled {
+  cursor: not-allowed;
+  color: #ccc;
+}
 
 .Success {
   color: #5c9210;
 }
 
+
 .Danger {
   color: #944317;
+}
+.Danger:disabled {
+  color: #bb7a57;
 }

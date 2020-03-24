@@ -15,7 +15,15 @@ class ContactData extends React.Component {
           type: "text",
           placeholder: "Your Name"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLenght: 3,
+          maxLength: 6,
+          eM: "Your Name Characters Must Be Between 3 and 6"
+        },
+        valid: false,
+        touched: false
       },
       street: {
         elementType: "input",
@@ -23,7 +31,15 @@ class ContactData extends React.Component {
           type: "text",
           placeholder: "Street"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLenght: 3,
+          maxLength: 6,
+          eM: "Your StreetName Characters Must Be Between 3 and 6"
+        },
+        valid: false,
+        touched: false
       },
       zipCode: {
         elementType: "input",
@@ -31,7 +47,15 @@ class ContactData extends React.Component {
           type: "text",
           placeholder: "ZIP Code"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLenght: 6,
+          maxLength: 6,
+          eM: "ZipCode is Wrong!"
+        },
+        valid: false,
+        touched: false
       },
       country: {
         elementType: "input",
@@ -39,7 +63,15 @@ class ContactData extends React.Component {
           type: "text",
           placeholder: "Country"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLenght: 3,
+          maxLength: 6,
+          eM: "inCorrect!"
+        },
+        valid: false,
+        touched: false
       },
       email: {
         elementType: "input",
@@ -47,7 +79,15 @@ class ContactData extends React.Component {
           type: "email",
           placeholder: "Your Mail"
         },
-        value: ""
+        value: "",
+        validation: {
+          required: true,
+          minLenght: 3,
+          maxLength: 6,
+          eM: "Invalid Email!"
+        },
+        valid: false,
+        touched: false
       },
       deliveryMethod: {
         elementType: "select",
@@ -63,10 +103,13 @@ class ContactData extends React.Component {
             }
           ]
         },
-        value: ""
+        validation: {},
+        value: "fastest",
+        valid: true
       }
     },
-    loading: false
+    loading: false,
+    formValid: false
   };
 
   orderHandler = event => {
@@ -93,14 +136,37 @@ class ContactData extends React.Component {
       .catch(e => this.setState({ loading: false }));
   };
 
+  checkValidity = (value, rules) => {
+    let isValid = true;
+    if (rules.required) {
+      isValid = value.replace(/\s+/g, "") !== "" && isValid;
+    }
+    if (rules.minLenght) {
+      isValid = value.replace(/\s+/g, "").length >= rules.minLenght && isValid;
+    }
+    if (rules.maxLength) {
+      isValid = value.replace(/\s+/g, "").length <= rules.maxLength && isValid;
+    }
+    return isValid;
+  };
+
   inputChangeHandler = (event, identifier) => {
     const updatedForm = { ...this.state.orderForm };
     const updatedFormElement = { ...updatedForm[identifier] };
     updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    updatedFormElement.touched = true;
     updatedForm[identifier] = updatedFormElement;
-    this.setState({
-      orderForm: updatedForm
-    });
+
+    let formValid = true;
+    for (let identifier in updatedForm) {
+      formValid = updatedForm[identifier].valid && formValid;
+    }
+
+    this.setState({ orderForm: updatedForm, formValid: formValid });
   };
 
   render() {
@@ -121,10 +187,18 @@ class ContactData extends React.Component {
             elementType={e.config.elementType}
             elementConfig={e.config.elementConfig}
             value={e.config.value}
+            invalid={!e.config.valid}
+            shouldValidation={e.config.validation}
+            touched={e.config.touched}
+            errorMessage={e.config.validation}
           ></Input>
         ))}
 
-        <Button btntype="Success" onClick={this.orderHandler}>
+        <Button
+          btntype="Success"
+          onClick={this.orderHandler}
+          disabled={!this.state.formValid}
+        >
           ORDER
         </Button>
       </form>
@@ -140,5 +214,4 @@ class ContactData extends React.Component {
     );
   }
 }
-
 export default withErrorHandler(ContactData, axios);

@@ -2,12 +2,18 @@ import React from "react";
 import styles from "./Input.module.css";
 
 const Input = props => {
+  const conditionalStyle = [styles.InputElement];
+
+  if (props.invalid && props.shouldValidation && props.touched) {
+    conditionalStyle.push(styles.Invalid);
+  }
+
   let inputElement = null;
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
-          className={styles.InputElement}
+          className={conditionalStyle.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -17,7 +23,7 @@ const Input = props => {
     case "textarea":
       inputElement = (
         <textarea
-          className={styles.InputElement}
+          className={conditionalStyle.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -27,7 +33,7 @@ const Input = props => {
     case "select":
       inputElement = (
         <select
-          className={styles.InputElement}
+          className={conditionalStyle.join(" ")}
           value={props.value}
           onChange={props.changed}
         >
@@ -43,7 +49,7 @@ const Input = props => {
     default:
       inputElement = (
         <input
-          className={styles.InputElement}
+          className={conditionalStyle.join(" ")}
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
@@ -51,10 +57,16 @@ const Input = props => {
       );
   }
 
+  let validationError = null;
+  if (props.invalid && props.touched) {
+    validationError = <p>{props.errorMessage.eM}</p>;
+  }
+
   return (
     <div className={styles.Input}>
       <label className={styles.Label}>{props.label}</label>
       {inputElement}
+      {validationError}
     </div>
   );
 };
