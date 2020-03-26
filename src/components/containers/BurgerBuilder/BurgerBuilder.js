@@ -1,5 +1,4 @@
 import React from "react";
-import Aux from "../../../hoc/Auxiliary";
 import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
 import Modal from "../../UI/Modal/Modal";
@@ -92,7 +91,6 @@ class BurgerBuilder extends React.Component {
   };
 
   purchaseContinueHandler = () => {
-    
     const queryParams = [];
     for (let i in this.state.ingredients) {
       queryParams.push(
@@ -101,20 +99,21 @@ class BurgerBuilder extends React.Component {
           encodeURIComponent(this.state.ingredients[i])
       );
     }
-    queryParams.push( 'price=' + this.state.totalPrice );
-    
-    const queryString = queryParams.join('&')
-    
+    queryParams.push("price=" + this.state.totalPrice);
+
+    const queryString = queryParams.join("&");
+
     this.props.history.push({
       pathname: "/checkout",
-      search: '?' + queryString
+      search: "?" + queryString
     });
-   };
+  };
+    
 
   render() {
     const disabledInfo = { ...this.state.ingredients };
     for (let i in disabledInfo) {
-      disabledInfo[i]  = disabledInfo[i] <= 0;
+      disabledInfo[i] = disabledInfo[i] <= 0;
     }
     let mainContent = <Spinner />;
     let orderSummary = (
@@ -137,7 +136,7 @@ class BurgerBuilder extends React.Component {
     }
     if (this.state.ingredients) {
       mainContent = (
-        <Aux>
+        <React.Fragment>
           <Modal
             show={this.state.purchasing}
             hideModalHandler={this.purchaseCancelHandler}
@@ -153,11 +152,11 @@ class BurgerBuilder extends React.Component {
             purchasable={this.state.purchasable}
             ordered={this.purchaseHandler}
           />
-        </Aux>
+        </React.Fragment>
       );
     }
 
-    return <Aux>{mainContent}</Aux>;
+    return <React.Fragment>{mainContent}</React.Fragment>;
   }
 }
 
