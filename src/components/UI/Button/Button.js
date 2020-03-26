@@ -6,6 +6,7 @@ const Button = props => {
     <button
       className={[styles.Button, styles[props.btntype]].join(" ")}
       {...props}
+      
     ></button>
   );
 };

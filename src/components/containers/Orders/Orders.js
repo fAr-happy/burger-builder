@@ -28,22 +28,17 @@ class Orders extends React.Component {
   }
 
   render() {
-    let orders = <Spinner />;
-    if (this.state.hasError) {
-      orders = <p>Sorry Error Happend</p>;
+    const { orders, hasError } = this.state;
+    let ordersContent = <Spinner />;
+    if (hasError) {
+      ordersContent = <p>Sorry Error Happend</p>;
     }
-    if (this.state.orders) {
-      orders = this.state.orders.map(order => {
-        return (
-          <Order
-            key={order.id}
-            price={order.price}
-            ingredinets={order.ingredients}
-          />
-        );
-      });
+    if (orders) {
+      ordersContent = orders.map(({ id, price, ingredients }) => (
+        <Order key={id} price={price} ingredients={ingredients} />
+      ));
     }
-    return <div className={styles.Orders}>{orders}</div>;
+    return <div className={styles.Orders}>{ordersContent}</div>;
   }
 }
 
