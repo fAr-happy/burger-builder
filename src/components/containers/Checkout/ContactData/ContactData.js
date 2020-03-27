@@ -5,6 +5,7 @@ import Spinner from "../../../UI/Spinner/Spinner";
 import axios from "../../../../axios-orders";
 import Input from "../../../UI/Input/Input";
 import withErrorHandler from "../../../../hoc/withErrorHandler/withErrorHandler";
+import { connect } from "react-redux";
 
 class ContactData extends React.Component {
   state = {
@@ -50,8 +51,8 @@ class ContactData extends React.Component {
         value: "",
         validation: {
           required: true,
-          minLenght: 6,
-          maxLength: 6,
+          minLenght: 5,
+          maxLength: 5,
           eM: "ZipCode is Wrong!"
         },
         valid: false,
@@ -82,8 +83,7 @@ class ContactData extends React.Component {
         value: "",
         validation: {
           required: true,
-          minLenght: 3,
-          maxLength: 6,
+          isEmail: true,
           eM: "Invalid Email!"
         },
         valid: false,
@@ -147,6 +147,15 @@ class ContactData extends React.Component {
     if (rules.maxLength) {
       isValid = value.replace(/\s+/g, "").length <= rules.maxLength && isValid;
     }
+    if (rules.isEmail) {
+      const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      isValid = pattern.test(String(value).toLowerCase()) && isValid;
+    }
+    if (rules.isNumeric) {
+      const pattern = /^(\+98|0)?9\d{9}$/g;
+      isValid = pattern.test(value);
+    }
+
     return isValid;
   };
 
@@ -214,4 +223,12 @@ class ContactData extends React.Component {
     );
   }
 }
-export default withErrorHandler(ContactData, axios);
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    price: state.totalPrice
+  };
+};
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData, axios));
