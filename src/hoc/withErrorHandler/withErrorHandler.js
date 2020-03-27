@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import Modal from "../../components/UI/Modal/Modal";
 
 const withErrorHandler = (WrappedComponent, axios) => {
-  return class extends React.Component {
+  return class extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -31,7 +31,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 
     render() {
       return (
-        <React.Fragment>
+        <Fragment>
           <Modal
             show={this.state.error}
             hideModalHandler={this.hideModalHandler}
@@ -39,7 +39,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
             {`${this.state.error}`}
           </Modal>
           <WrappedComponent {...this.props} />
-        </React.Fragment>
+        </Fragment>
       );
     }
   };

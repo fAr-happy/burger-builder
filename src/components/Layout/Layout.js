@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./Layout.module.css";
 import Toolbar from "../Navigation/Toolbar/Toolbar";
 import SideDrawer from "../Navigation/SidaDrawer/SideDrawer";
 
-class Layout extends React.Component {
+class Layout extends Component {
   state = {
     showDrawer: false
   };
@@ -22,7 +22,7 @@ class Layout extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <Toolbar sideDrawerHandler={this.sideDrawerHandler} />
         <SideDrawer
           hideSideDrawer={this.hideSideDrawer}
@@ -30,7 +30,7 @@ class Layout extends React.Component {
         />
         <hr />
         <main className={styles.Content}>{this.props.children}</main>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

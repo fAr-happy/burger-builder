@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import Button from "../../UI/Button/Button";
 
 const OrderSummary = props => {
@@ -11,7 +11,7 @@ const OrderSummary = props => {
     );
   });
   return (
-    <React.Fragment>
+    <Fragment>
       <h3>Your Order</h3>
       <p>A delicious Burger with the following ingredients:</p>
       <ul>{orderSummary}</ul>
@@ -25,7 +25,7 @@ const OrderSummary = props => {
       <Button onClick={props.continue} btntype="Success">
         CONTINUE
       </Button>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

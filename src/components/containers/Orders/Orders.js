@@ -1,11 +1,11 @@
-import React from "react";
+import React, {Component} from "react";
 import axios from "../../../axios-orders";
 import Order from "../../Order/Order";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import styles from "./Orders.module.css";
 
-class Orders extends React.Component {
+class Orders extends Component {
   state = {
     orders: null,
     hasError: false

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component} from "react";
 import Button from "../../../UI/Button/Button";
 import styles from "./ContactData.module.css";
 import Spinner from "../../../UI/Spinner/Spinner";
@@ -7,7 +7,7 @@ import Input from "../../../UI/Input/Input";
 import withErrorHandler from "../../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 
-class ContactData extends React.Component {
+class ContactData extends Component {
   state = {
     orderForm: {
       name: {

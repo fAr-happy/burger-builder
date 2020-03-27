@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component, Fragment} from "react";
 import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
 import Modal from "../../UI/Modal/Modal";
@@ -9,7 +9,7 @@ import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import * as actionType from "../../../store/actions";
 
-class BurgerBuilder extends React.Component {
+class BurgerBuilder extends Component {
   state = {
     hasIngredientsFailed: false,
     purchasing: false,
@@ -81,7 +81,7 @@ class BurgerBuilder extends React.Component {
     }
     if (this.props.ingredients) {
       mainContent = (
-        <React.Fragment>
+        <Fragment>
           <Modal
             show={this.state.purchasing}
             hideModalHandler={this.purchaseCancelHandler}
@@ -97,11 +97,11 @@ class BurgerBuilder extends React.Component {
             purchasable={this.updatePurchasedState()}
             ordered={this.purchaseHandler}
           />
-        </React.Fragment>
+        </Fragment>
       );
     }
 
-    return <React.Fragment>{mainContent}</React.Fragment>;
+    return <Fragment>{mainContent}</Fragment>;
   }
 }
 
