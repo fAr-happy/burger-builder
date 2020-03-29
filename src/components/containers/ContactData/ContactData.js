@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import Button from "../../../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 import styles from "./ContactData.module.css";
-import Spinner from "../../../UI/Spinner/Spinner";
-import axios from "../../../../axios-orders";
-import Input from "../../../UI/Input/Input";
-import withErrorHandler from "../../../../hoc/withErrorHandler/withErrorHandler";
+import Spinner from "../../UI/Spinner/Spinner";
+import axios from "../../../axios-orders";
+import Input from "../../UI/Input/Input";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 
 class ContactData extends Component {

@@ -7,11 +7,11 @@ import axios from "../../../axios-orders";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as actionType from "../../../store/burgerBuilder/types";
+import * as actionType from "../../../store/BurgerBuilder/types";
 import {
   addIngredient,
   removeIngredient
-} from "../../../store/burgerBuilder/actions";
+} from "../../../store/BurgerBuilder/actions";
 
 class BurgerBuilder extends Component {
   state = {
