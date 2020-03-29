@@ -4,16 +4,16 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
-import { createStore, compose } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import reducer from "./store/reducer";
 
-/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  /* preloadedState, */ composeEnhancers(applyMiddleware(thunk))
 );
-/* eslint-enable */
 
 const app = (
   <Provider store={store}>
