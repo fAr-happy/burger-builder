@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from "react";
+import React, { Component, Fragment } from "react";
 import Burger from "../../Burger/Burger";
 import BuildControls from "../../Burger/BuildControls/BuildControls";
 import Modal from "../../UI/Modal/Modal";
@@ -7,7 +7,11 @@ import axios from "../../../axios-orders";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as actionType from "../../../store/actions";
+import * as actionType from "../../../store/burgerBuilder/types";
+import {
+  addIngredient,
+  removeIngredient
+} from "../../../store/burgerBuilder/actions";
 
 class BurgerBuilder extends Component {
   state = {
@@ -90,8 +94,12 @@ class BurgerBuilder extends Component {
           </Modal>
           <Burger ingredients={this.props.ingredients} />
           <BuildControls
-            addIngredient={this.props.addIngredient}
-            removeIngredient={this.props.removeIngredient}
+            addIngredient={ingType =>
+              this.props.addIngredient({ ingType: ingType })
+            }
+            removeIngredient={ingType =>
+              this.props.removeIngredient({ ingType: ingType })
+            }
             disabled={disabledInfo}
             price={this.props.totalPrice}
             purchasable={this.updatePurchasedState()}
@@ -112,22 +120,6 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addIngredient: ingType =>
-      dispatch({
-        type: actionType.ADD_INGREDIENT,
-        payload: { ingType: ingType }
-      }),
-    removeIngredient: ingType =>
-      dispatch({
-        type: actionType.REMOVE_INGREDIENT,
-        payload: { ingType: ingType }
-      })
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withErrorHandler(BurgerBuilder, axios));
+export default connect(mapStateToProps, { addIngredient, removeIngredient })(
+  withErrorHandler(BurgerBuilder, axios)
+);
