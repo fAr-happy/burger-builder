@@ -1,4 +1,5 @@
 import * as actionType from "./types";
+import axios from "axios";
 
 const INGREDIENT_PRICES = {
   salad: 1,
@@ -8,13 +9,9 @@ const INGREDIENT_PRICES = {
 };
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    meat: 0,
-    cheese: 0
-  },
-  totalPrice: 0
+  ingredients: null,
+  totalPrice: 0,
+  error: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +35,22 @@ const reducer = (state = initialState, action) => {
             state.ingredients[action.payload.ingType] - 1
         },
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.payload.ingType]
+      };
+    case actionType.getIngredientsSuccess:
+      return {
+        ...state,
+        error: false,
+        ingredients: {
+          salad: action.payload.ingredients.salad,
+          cheese: action.payload.ingredients.cheese,
+          meat: action.payload.ingredients.meat,
+          bacon: action.payload.ingredients.bacon
+        }
+      };
+    case actionType.getIngredientsFailure:
+      return {
+        ...state,
+        error: true
       };
     default:
       return state;

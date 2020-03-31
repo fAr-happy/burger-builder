@@ -7,21 +7,19 @@ import axios from "../../../axios-orders";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as actionType from "../../../store/BurgerBuilder/types";
 import {
   addIngredient,
-  removeIngredient
+  removeIngredient,
+  fetchIngredients
 } from "../../../store/BurgerBuilder/actions";
 
 class BurgerBuilder extends Component {
   state = {
-    hasIngredientsFailed: false,
-    purchasing: false,
-    loading: false
+    purchasing: false
   };
-
   //redux-async
   componentDidMount() {
+    this.props.fetchIngredients();
     // axios
     //   .get("/ingredients.json")
     //   .then(r => {
@@ -31,7 +29,7 @@ class BurgerBuilder extends Component {
     //   })
     //   .catch(e => {
     //     this.setState({
-    //       hasIngredientsFailed: true
+    //       error: true
     //     });
     //   });
   }
@@ -64,7 +62,6 @@ class BurgerBuilder extends Component {
     for (let i in disabledInfo) {
       disabledInfo[i] = disabledInfo[i] <= 0;
     }
-    let mainContent = <Spinner />;
     let orderSummary = (
       <OrderSummary
         cancel={this.purchaseCancelHandler}
@@ -73,18 +70,15 @@ class BurgerBuilder extends Component {
         price={this.props.totalPrice}
       />
     );
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-    if (this.state.hasIngredientsFailed) {
-      mainContent = (
-        <p style={{ textAlign: "center", marginTop: "200px" }}>
-          Can't Get Ingredients, Please Reload the Page or
-        </p>
-      );
-    }
+
+    let burger = this.props.error ? (
+      <p style={{ textAlign: "center", marginTop: "200px" }}>sss</p>
+    ) : (
+      <Spinner />
+    );
+
     if (this.props.ingredients) {
-      mainContent = (
+      burger = (
         <Fragment>
           <Modal
             show={this.state.purchasing}
@@ -109,17 +103,20 @@ class BurgerBuilder extends Component {
       );
     }
 
-    return <Fragment>{mainContent}</Fragment>;
+    return <Fragment>{burger}</Fragment>;
   }
 }
 
 const mapStateToProps = state => {
   return {
     ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    totalPrice: state.totalPrice,
+    error: state.error,
   };
 };
 
-export default connect(mapStateToProps, { addIngredient, removeIngredient })(
-  withErrorHandler(BurgerBuilder, axios)
-);
+export default connect(mapStateToProps, {
+  addIngredient,
+  removeIngredient,
+  fetchIngredients
+})(withErrorHandler(BurgerBuilder, axios));
