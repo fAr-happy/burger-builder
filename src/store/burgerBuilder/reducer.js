@@ -1,5 +1,4 @@
 import * as actionType from "./types";
-import axios from "axios";
 
 const INGREDIENT_PRICES = {
   salad: 1,

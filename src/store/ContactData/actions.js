@@ -7,11 +7,9 @@ const postOrderRequest = () => {
   };
 };
 
-const postOrderSuccess = (id, orderData) => {
+const postOrderSuccess = () => {
   return {
-    type: actionTypes.POST_ORDER_SUCCESS,
-    orderId: id,
-    orderData: orderData
+    type: actionTypes.POST_ORDER_SUCCESS
   };
 };
 
@@ -29,7 +27,7 @@ export const postOrder = orderData => {
     axios
       .post("/orders.json ", orderData)
       .then(r => {
-        dispatch(postOrderSuccess(r.data.name, orderData));
+        dispatch(postOrderSuccess());
       })
       .catch(e => {
         dispatch(postOrderFailure(e));
