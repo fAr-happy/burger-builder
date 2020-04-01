@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import styles from "./SideDrawer.module.css";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Logo from "../../Logo/Logo";
@@ -10,7 +10,7 @@ const SideDrawer = props => {
     attachedStyles = [styles.SideDrawer, styles.Open];
   }
   return (
-    <React.Fragment>
+    <Fragment>
       <Backdrop hideHandler={props.hideSideDrawer} show={props.show}></Backdrop>
       <div className={attachedStyles.join(" ")}>
         <div className={styles.Logo}>
@@ -20,7 +20,7 @@ const SideDrawer = props => {
           <NavigationItems />
         </nav>
       </div>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

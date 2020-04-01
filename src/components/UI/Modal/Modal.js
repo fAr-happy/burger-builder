@@ -1,19 +1,19 @@
-import React from "react";
+import React, { Component, Fragment } from "react";
 import styles from "./Modal.module.css";
 import Backdrop from "../Backdrop/Backdrop";
 
 //haji pashamam
 
-class Modal extends React.Component {
+class Modal extends Component {
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.show !== this.props.show ||
       nextProps.children !== this.props.children
-    ) ;
+    );
   }
   render() {
     return (
-      <React.Fragment>
+      <Fragment>
         <Backdrop
           hideHandler={this.props.hideModalHandler}
           show={this.props.show}
@@ -27,7 +27,7 @@ class Modal extends React.Component {
         >
           {this.props.children}
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

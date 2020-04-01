@@ -1,36 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import axios from "../../../axios-orders";
 import Order from "../../Order/Order";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import styles from "./Orders.module.css";
+import { connect } from "react-redux";
+import { fetchOrders } from "../../../store/Orders/actions";
 
-class Orders extends React.Component {
-  state = {
-    orders: null,
-    hasError: false
-  };
-
+class Orders extends Component {
   componentDidMount() {
-    axios
-      .get("/orders.json")
-      .then(r => {
-        const fetchOrders = [];
-        for (let key in r.data) {
-          fetchOrders.push({
-            ...r.data[key],
-            id: key
-          });
-        }
-        this.setState({ orders: fetchOrders });
-      })
-      .catch(e => this.setState({ hasError: true }));
+    this.props.fetchOrders();
   }
 
   render() {
-    const { orders, hasError } = this.state;
-    let ordersContent = <Spinner />;
-    if (hasError) {
+    const { orders, error, loading } = this.props;
+    let ordersContent = loading ? <Spinner /> : null;
+    if (error) {
       ordersContent = <p>Sorry Error Happend</p>;
     }
     if (orders) {
@@ -38,8 +23,18 @@ class Orders extends React.Component {
         <Order key={id} price={price} ingredients={ingredients} />
       ));
     }
-    return <div className={styles.Orders}>{ordersContent}</div>;
+  return <div className={styles.Orders}>{ordersContent}</div>;
   }
 }
 
-export default withErrorHandler(Orders, axios);
+const mapStateToProps = state => {
+  return {
+    orders: state.orders.orders,
+    loading: state.orders.loading,
+    error: state.orders.error
+  };
+};
+
+export default connect(mapStateToProps, { fetchOrders })(
+  withErrorHandler(Orders, axios)
+);

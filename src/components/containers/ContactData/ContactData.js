@@ -1,12 +1,15 @@
-import React from "react";
-import Button from "../../../UI/Button/Button";
+import React, { Component, Fragment } from "react";
+import Button from "../../UI/Button/Button";
 import styles from "./ContactData.module.css";
-import Spinner from "../../../UI/Spinner/Spinner";
-import axios from "../../../../axios-orders";
-import Input from "../../../UI/Input/Input";
-import withErrorHandler from "../../../../hoc/withErrorHandler/withErrorHandler";
+import Spinner from "../../UI/Spinner/Spinner";
+import axios from "../../../axios-orders";
+import Input from "../../UI/Input/Input";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import { connect } from "react-redux";
+import { postOrder } from "../../../store/ContactData/actions";
+import { Redirect } from "react-router-dom";
 
-class ContactData extends React.Component {
+class ContactData extends Component {
   state = {
     orderForm: {
       name: {
@@ -50,8 +53,8 @@ class ContactData extends React.Component {
         value: "",
         validation: {
           required: true,
-          minLenght: 6,
-          maxLength: 6,
+          minLenght: 5,
+          maxLength: 5,
           eM: "ZipCode is Wrong!"
         },
         valid: false,
@@ -82,8 +85,7 @@ class ContactData extends React.Component {
         value: "",
         validation: {
           required: true,
-          minLenght: 3,
-          maxLength: 6,
+          isEmail: true,
           eM: "Invalid Email!"
         },
         valid: false,
@@ -108,7 +110,6 @@ class ContactData extends React.Component {
         valid: true
       }
     },
-    loading: false,
     formValid: false
   };
 
@@ -119,21 +120,12 @@ class ContactData extends React.Component {
     for (let key in formInfo) {
       customerForm[key] = formInfo[key].value;
     }
-    this.setState({
-      loading: true
-    });
-    const order = {
+    let order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
       customerDetailes: customerForm
     };
-    axios
-      .post("/orders.json", order)
-      .then(r => {
-        this.setState({ loading: false });
-        this.props.history.push("/");
-      })
-      .catch(e => this.setState({ loading: false }));
+    this.props.postOrder(order);
   };
 
   checkValidity = (value, rules) => {
@@ -147,6 +139,15 @@ class ContactData extends React.Component {
     if (rules.maxLength) {
       isValid = value.replace(/\s+/g, "").length <= rules.maxLength && isValid;
     }
+    if (rules.isEmail) {
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      isValid = pattern.test(String(value).toLowerCase()) && isValid;
+    }
+    if (rules.isNumeric) {
+      const pattern = /^(\+98|0)?9\d{9}$/g;
+      isValid = pattern.test(value);
+    }
+
     return isValid;
   };
 
@@ -178,6 +179,8 @@ class ContactData extends React.Component {
       });
     }
 
+    const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
+
     let form = (
       <form>
         {formElementsArray.map(e => (
@@ -203,15 +206,32 @@ class ContactData extends React.Component {
         </Button>
       </form>
     );
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
+
     return (
-      <div className={styles.ContactData}>
-        <h4>Enter Your Contact Data</h4>
-        {form}
-      </div>
+      <Fragment>
+        {purchasedRedirect}
+        <div className={styles.ContactData}>
+          <h4>Enter Your Contact Data</h4>
+          {console.log(this.props)}
+          {form}
+        </div>
+      </Fragment>
     );
   }
 }
-export default withErrorHandler(ContactData, axios);
+
+const mapStateToProps = state => {
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.contactData.loading,
+    purchased: state.contactData.purchased
+  };
+};
+
+export default connect(mapStateToProps, { postOrder })(
+  withErrorHandler(ContactData, axios)
+);
