@@ -12,26 +12,17 @@ import {
   removeIngredient,
   fetchIngredients
 } from "../../../store/BurgerBuilder/actions";
+import {
+  postInit
+} from '../../../store/ContactData/actions';
 
 class BurgerBuilder extends Component {
   state = {
     purchasing: false
   };
-  //redux-async
+
   componentDidMount() {
     this.props.fetchIngredients();
-    // axios
-    //   .get("/ingredients.json")
-    //   .then(r => {
-    //     this.setState({
-    //       ingredients: r.data
-    //     });
-    //   })
-    //   .catch(e => {
-    //     this.setState({
-    //       error: true
-    //     });
-    //   });
   }
 
   updatePurchasedState = () => {
@@ -52,6 +43,7 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
+    this.props.postInit();
     this.props.history.push({
       pathname: "/checkout"
     });
@@ -107,16 +99,17 @@ class BurgerBuilder extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 
 export default connect(mapStateToProps, {
   addIngredient,
   removeIngredient,
-  fetchIngredients
+  fetchIngredients,
+  postInit
 })(withErrorHandler(BurgerBuilder, axios));

@@ -14,6 +14,16 @@ const initialState = {
   error: false
 };
 
+const getTotalPriceFromQuantity = (ingredients) => {
+  const ingredientsWithPrice = {};
+  for (let key in ingredients) {
+    ingredientsWithPrice[key] =
+      ingredients[key] * INGREDIENT_PRICES[key];
+  }
+  const totalPrice = Object.values(ingredientsWithPrice).reduce((a, b) => a + b);
+  return totalPrice
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionType.ADD_INGREDIENT:
@@ -37,6 +47,7 @@ const reducer = (state = initialState, action) => {
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.payload.ingType]
       };
     case actionType.getIngredientsSuccess:
+     
       return {
         ...state,
         error: false,
@@ -45,7 +56,8 @@ const reducer = (state = initialState, action) => {
           cheese: action.payload.ingredients.cheese,
           meat: action.payload.ingredients.meat,
           bacon: action.payload.ingredients.bacon
-        }
+        },
+        totalPrice: getTotalPriceFromQuantity(action.payload.ingredients)
       };
     case actionType.getIngredientsFailure:
       return {
