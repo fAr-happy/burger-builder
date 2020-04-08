@@ -21,11 +21,11 @@ const fetchOrdersFailure = error => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
   return dispatch => {
     dispatch(fetchOrdersRequest());
     axios
-      .get("/orders.json")
+      .get(`/orders.json?auth=${token}`)
       .then(r => {
         dispatch(fetchOrdersSuccess(r.data));
       })
@@ -34,3 +34,5 @@ export const fetchOrders = () => {
       });
   };
 };
+
+

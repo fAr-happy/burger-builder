@@ -10,11 +10,13 @@ import thunk from "redux-thunk";
 import burgerBuilderReducer from "./store/BurgerBuilder/reducer";
 import contactDataReducer from "./store/ContactData/reducer";
 import ordersReducer from "./store/Orders/reducer";
+import authReducer from "./store/Auth/reducer";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerBuilderReducer,
   contactData: contactDataReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  auth: authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

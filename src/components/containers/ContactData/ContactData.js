@@ -125,7 +125,7 @@ class ContactData extends Component {
       price: this.props.price,
       customerDetailes: customerForm
     };
-    this.props.postOrder(order);
+    this.props.postOrder(order,this.props.token);
   };
 
   checkValidity = (value, rules) => {
@@ -228,7 +228,8 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.contactData.loading,
-    purchased: state.contactData.purchased
+    purchased: state.contactData.purchased,
+    token: state.auth.token
   };
 };
 

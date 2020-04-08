@@ -20,12 +20,12 @@ const postOrderFailure = error => {
   };
 };
 
-export const postOrder = orderData => {
+export const postOrder = (orderData, token )=> {
   return dispatch => {
     dispatch(postOrderRequest());
     console.log("dis[atched");
     axios
-      .post("/orders.json ", orderData)
+      .post(`/orders.json?auth=${token}`, orderData)
       .then(r => {
         dispatch(postOrderSuccess());
       })
@@ -34,6 +34,7 @@ export const postOrder = orderData => {
       });
   };
 };
+
 
 export const postInit = () => {
   return {
