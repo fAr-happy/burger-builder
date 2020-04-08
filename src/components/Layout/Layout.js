@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import styles from "./Layout.module.css";
-import Toolbar from "../Navigation/Toolbar/Toolbar";
-import SideDrawer from "../Navigation/SidaDrawer/SideDrawer";
+import Toolbar from "components/Navigation/Toolbar/Toolbar";
+import SideDrawer from "components/Navigation/SidaDrawer/SideDrawer";
 import { connect } from "react-redux";
 
 class Layout extends Component {

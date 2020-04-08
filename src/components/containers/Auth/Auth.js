@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Input from "../../UI/Input/Input";
-import Button from "../../UI/Button/Button";
-import Spinner from "../../UI/Spinner/Spinner";
+import Input from "components/UI/Input/Input";
+import Button from "components/UI/Button/Button";
+import Spinner from "components/UI/Spinner/Spinner";
 import { auth } from "./Auth.module.css";
 import { connect } from "react-redux";
-import { onAuth } from "../../../store/Auth/actions";
+import { onAuth } from "store/Auth/actions";
 import { Redirect } from "react-router-dom";
 
 class Auth extends Component {
@@ -82,21 +82,6 @@ class Auth extends Component {
 
     this.setState({ authForm: updatedForm, formValid: formValid });
   };
-
-  // orderHandler = event => {
-  //   event.preventDefault();
-  //   // const formInfo = { ...this.state.authForm };
-  //   // const customerForm = {};
-  //   // for (let key in formInfo) {
-  //   //   customerForm[key] = formInfo[key].value;
-  //   // }
-  //   // let authData = {
-  //   //   ingredients: this.props.ingredients,
-  //   //   price: this.props.price,
-  //   //   customerDetailes: customerForm
-  //   // };
-  //   console.log("Submit clicked!");
-  // };
 
   submitHandler = (event) => {
     event.preventDefault();

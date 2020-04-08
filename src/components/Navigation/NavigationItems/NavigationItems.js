@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import styles from "./NavigationItems.module.css";
-import NavigationItem from "../NavigationItems/NavigationItem/NavigationItem";
+import NavigationItem from "components/Navigation/NavigationItems/NavigationItem/NavigationItem";
 
 const NavigationItems = (props) => {
   const authenticatedNavigationItem = !props.isAuthenticated ? (

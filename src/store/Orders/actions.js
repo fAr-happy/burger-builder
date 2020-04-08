@@ -1,5 +1,5 @@
-import * as actionTypes from "../Orders/types";
-import axios from "../../axios-orders";
+import * as actionTypes from "store/Orders/types";
+import axios from "axios-orders";
 
 const fetchOrdersRequest = () => {
   return {

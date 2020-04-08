@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
 import styles from "./SideDrawer.module.css";
-import NavigationItems from "../NavigationItems/NavigationItems";
-import Logo from "../../Logo/Logo";
-import Backdrop from "../../UI/Backdrop/Backdrop";
+import NavigationItems from "components/Navigation/NavigationItems/NavigationItems";
+import Logo from "components/Logo/Logo";
+import Backdrop from "components/UI/Backdrop/Backdrop";
 
 const SideDrawer = props => {
   let attachedStyles = [styles.SideDrawer, styles.Close];

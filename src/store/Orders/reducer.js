@@ -1,5 +1,5 @@
 import * as actionTypes from "./types";
-import {updateObject} from '../utilities/updateObject';
+import {updateObject} from 'store/utilities/updateObject';
 
 const initialState = {
   orders: null,

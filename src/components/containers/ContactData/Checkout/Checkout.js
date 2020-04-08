@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import CheckoutSummary from "../../../Order/CheckoutSummary/CheckoutSummary";
+import CheckoutSummary from "components/Order/CheckoutSummary/CheckoutSummary";
 import { Route, Redirect } from "react-router-dom";
-import ContactData from "../ContactData";
+import ContactData from "components/containers/ContactData/ContactData";
 import { connect } from "react-redux";
 
 class Checkout extends Component {

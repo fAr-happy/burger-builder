@@ -1,18 +1,18 @@
 import React, { Component, Fragment } from "react";
-import Burger from "../../Burger/Burger";
-import BuildControls from "../../Burger/BuildControls/BuildControls";
-import Modal from "../../UI/Modal/Modal";
-import OrderSummary from "../../Burger/OrderSummary/OrderSummary";
-import axios from "../../../axios-orders";
-import Spinner from "../../UI/Spinner/Spinner";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import Burger from "components/Burger/Burger";
+import BuildControls from "components/Burger/BuildControls/BuildControls";
+import Modal from "components/UI/Modal/Modal";
+import Spinner from "components/UI/Spinner/Spinner";
+import OrderSummary from "components/Burger/OrderSummary/OrderSummary";
+import axios from "axios-orders";
+import withErrorHandler from "hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import {
   addIngredient,
   removeIngredient,
   fetchIngredients,
-} from "../../../store/BurgerBuilder/actions";
-import { postInit } from "../../../store/ContactData/actions";
+} from "store/BurgerBuilder/actions";
+import { postInit } from "store/ContactData/actions";
 
 class BurgerBuilder extends Component {
   state = {
