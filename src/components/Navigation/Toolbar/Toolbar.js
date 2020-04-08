@@ -12,7 +12,7 @@ const Toolbar = props => {
       <DrawerToggle onClick={props.sideDrawerHandler} />
       <Logo />
       <nav className={styles.DesktopOnly}>
-        <NavigationItems />
+        <NavigationItems isAuthenticated={props.isAuth} />  
       </nav>
     </header>
   );

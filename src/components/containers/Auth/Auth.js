@@ -5,6 +5,7 @@ import Spinner from "../../UI/Spinner/Spinner";
 import { auth } from "./Auth.module.css";
 import { connect } from "react-redux";
 import { onAuth } from "../../../store/Auth/actions";
+import { Redirect } from "react-router-dom";
 
 class Auth extends Component {
   state = {
@@ -13,36 +14,36 @@ class Auth extends Component {
         elementType: "input",
         elementConfig: {
           type: "email",
-          placeholder: "Your Mail"
+          placeholder: "Your Mail",
         },
         value: "",
         validation: {
           required: true,
           isEmail: true,
-          eM: "Invalid Email!"
+          eM: "Invalid Email!",
         },
         valid: false,
-        touched: false
+        touched: false,
       },
       password: {
         elementType: "input",
         elementConfig: {
           type: "password",
-          placeholder: "Password"
+          placeholder: "Password",
         },
         value: "",
         validation: {
           required: true,
           minLenght: 6,
           maxLength: 50,
-          eM: "Short Password"
+          eM: "Short Password",
         },
         valid: false,
-        touched: false
-      }
+        touched: false,
+      },
     },
     formValid: false,
-    isSignup: true
+    isSignup: true,
   };
 
   checkValidity = (value, rules) => {
@@ -97,7 +98,7 @@ class Auth extends Component {
   //   console.log("Submit clicked!");
   // };
 
-  submitHandler = event => {
+  submitHandler = (event) => {
     event.preventDefault();
     this.props.onAuth(
       this.state.authForm.email.value,
@@ -107,10 +108,9 @@ class Auth extends Component {
   };
 
   swithAuthModeHandler = () => {
-   
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return {
-        isSignup: !prevState.isSignup
+        isSignup: !prevState.isSignup,
       };
     });
   };
@@ -124,13 +124,13 @@ class Auth extends Component {
     for (let key in this.state.authForm) {
       formElementsArray.push({
         id: key,
-        config: this.state.authForm[key]
+        config: this.state.authForm[key],
       });
     }
 
-    let form = formElementsArray.map(e => (
+    let form = formElementsArray.map((e) => (
       <Input
-        changed={event => this.inputChangeHandler(event, e.id)}
+        changed={(event) => this.inputChangeHandler(event, e.id)}
         key={e.id}
         elementType={e.config.elementType}
         elementConfig={e.config.elementConfig}
@@ -146,10 +146,16 @@ class Auth extends Component {
       form = <Spinner></Spinner>;
     }
 
+    let authRedirect = null;
+    if (this.props.token) {
+      authRedirect = <Redirect to="/" />;
+    }
+
     return (
       <div className={auth}>
+        {authRedirect}
         {errorMessage}
-        <form onSubmit={this.submitHandler} >
+        <form onSubmit={this.submitHandler}>
           {this.state.isSignup ? "Sign Up Form" : "Sign IN Form"}
           {form}
           <Button
@@ -169,12 +175,12 @@ class Auth extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    token: state.auth.token,
+    token: !!state.auth.token,
     userId: state.auth.userId,
     error: state.auth.error,
-    loading: state.auth.loading
+    loading: state.auth.loading,
   };
 };
 
