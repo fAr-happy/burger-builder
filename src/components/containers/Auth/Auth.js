@@ -148,7 +148,7 @@ class Auth extends Component {
 
     let authRedirect = null;
     if (this.props.token) {
-      authRedirect = <Redirect to="/" />;
+      authRedirect = <Redirect to="/checkout" />;
     }
 
     return (
