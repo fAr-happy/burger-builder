@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Layout from "./components/Layout/Layout";
-import BurgerBuilder from "./components/containers/BurgerBuilder/BurgerBuilder";
+import Layout from "components/Layout/Layout";
+import BurgerBuilder from "components/containers/BurgerBuilder/BurgerBuilder";
 import { Route, Switch } from "react-router-dom";
-import Checkout from './components/containers/ContactData/Checkout/Checkout';
-import Orders from "./components/containers/Orders/Orders";
-import Auth from "./components/containers/Auth/Auth";
-import Logout from "./components/containers/Auth/Logout/Logout";
+import Checkout from 'components/containers/ContactData/Checkout/Checkout';
+import Orders from "components/containers/Orders/Orders";
+import Auth from "components/containers/Auth/Auth";
+import Logout from "components/containers/Auth/Logout/Logout";
 
 export default class App extends Component {
   render() {
