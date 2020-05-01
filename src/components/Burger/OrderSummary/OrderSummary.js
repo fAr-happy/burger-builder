@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import Button from "../../UI/Button/Button";
+import Button from "components/UI/Button/Button";
 
 const OrderSummary = props => {
   let orderSummary = Object.keys(props.ingredients).map(ingredient => {

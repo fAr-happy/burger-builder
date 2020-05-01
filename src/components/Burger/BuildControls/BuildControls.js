@@ -6,16 +6,16 @@ const controls = [
   { label: "Salad", type: "salad" },
   { label: "Bacon", type: "bacon" },
   { label: "Cheese", type: "cheese" },
-  { label: "Meat", type: "meat" }
+  { label: "Meat", type: "meat" },
 ];
 
-const BuildControls = props => {
+const BuildControls = (props) => {
   return (
     <div className={styles.BuildControls}>
       <p>
         Current Price: <strong>{props.price.toFixed(2)}</strong>
       </p>
-      {controls.map(control => {
+      {controls.map((control) => {
         return (
           <BuildControl
             label={control.label}
@@ -26,7 +26,13 @@ const BuildControls = props => {
           ></BuildControl>
         );
       })}
-      <button className={styles.OrderButton} disabled={!props.purchasable} onClick={props.ordered} >ORDER NOW</button>
+      <button
+        className={styles.OrderButton}
+        disabled={!props.purchasable}
+        onClick={props.ordered}
+      >
+        {props.isAuth ? 'OrderNow' : 'SIGN UP to Order'}
+      </button>
     </div>
   );
 };

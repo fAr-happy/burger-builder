@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from "react";
-import Button from "../../UI/Button/Button";
+import Button from "components/UI/Button/Button";
 import styles from "./ContactData.module.css";
-import Spinner from "../../UI/Spinner/Spinner";
-import axios from "../../../axios-orders";
-import Input from "../../UI/Input/Input";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import Spinner from "components/UI/Spinner/Spinner";
+import axios from "axios-orders";
+import Input from "components/UI/Input/Input";
+import withErrorHandler from "hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import { postOrder } from "../../../store/ContactData/actions";
+import { postOrder } from "store/ContactData/actions";
 import { Redirect } from "react-router-dom";
 
 class ContactData extends Component {
@@ -125,7 +125,7 @@ class ContactData extends Component {
       price: this.props.price,
       customerDetailes: customerForm
     };
-    this.props.postOrder(order);
+    this.props.postOrder(order,this.props.token);
   };
 
   checkValidity = (value, rules) => {
@@ -228,7 +228,8 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.contactData.loading,
-    purchased: state.contactData.purchased
+    purchased: state.contactData.purchased,
+    token: state.auth.token
   };
 };
 

@@ -1,5 +1,5 @@
 import * as actionType from "./types";
-import { updateObject } from "../utilities/updateObject";
+import { updateObject } from "store/utilities/updateObject";
 
 const INGREDIENT_PRICES = {
   salad: 1,

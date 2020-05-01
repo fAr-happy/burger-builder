@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import axios from "../../../axios-orders";
-import Order from "../../Order/Order";
-import Spinner from "../../UI/Spinner/Spinner";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import axios from "axios-orders";
+import Order from "components/Order/Order";
+import Spinner from "components/UI/Spinner/Spinner";
+import withErrorHandler from "hoc/withErrorHandler/withErrorHandler";
 import styles from "./Orders.module.css";
 import { connect } from "react-redux";
-import { fetchOrders } from "../../../store/Orders/actions";
+import { fetchOrders } from "store/Orders/actions";
 
 class Orders extends Component {
   componentDidMount() {
-    this.props.fetchOrders();
+    this.props.fetchOrders(this.props.token);
   }
 
   render() {
@@ -23,7 +23,7 @@ class Orders extends Component {
         <Order key={id} price={price} ingredients={ingredients} />
       ));
     }
-  return <div className={styles.Orders}>{ordersContent}</div>;
+    return <div className={styles.Orders}>{ordersContent}</div>;
   }
 }
 
@@ -31,7 +31,8 @@ const mapStateToProps = state => {
   return {
     orders: state.orders.orders,
     loading: state.orders.loading,
-    error: state.orders.error
+    error: state.orders.error,
+    token: state.auth.token
   };
 };
 

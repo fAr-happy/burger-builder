@@ -1,24 +1,22 @@
 import React, { Component, Fragment } from "react";
-import Burger from "../../Burger/Burger";
-import BuildControls from "../../Burger/BuildControls/BuildControls";
-import Modal from "../../UI/Modal/Modal";
-import OrderSummary from "../../Burger/OrderSummary/OrderSummary";
-import axios from "../../../axios-orders";
-import Spinner from "../../UI/Spinner/Spinner";
-import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import Burger from "components/Burger/Burger";
+import BuildControls from "components/Burger/BuildControls/BuildControls";
+import Modal from "components/UI/Modal/Modal";
+import Spinner from "components/UI/Spinner/Spinner";
+import OrderSummary from "components/Burger/OrderSummary/OrderSummary";
+import axios from "axios-orders";
+import withErrorHandler from "hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import {
   addIngredient,
   removeIngredient,
-  fetchIngredients
-} from "../../../store/BurgerBuilder/actions";
-import {
-  postInit
-} from '../../../store/ContactData/actions';
+  fetchIngredients,
+} from "store/BurgerBuilder/actions";
+import { postInit } from "store/ContactData/actions";
 
 class BurgerBuilder extends Component {
   state = {
-    purchasing: false
+    purchasing: false,
   };
 
   componentDidMount() {
@@ -31,21 +29,25 @@ class BurgerBuilder extends Component {
   };
 
   purchaseHandler = () => {
-    this.setState({
-      purchasing: true
-    });
+    if (this.props.isAuth) {
+      this.setState({
+        purchasing: true,
+      });
+    } else {
+      this.props.history.push("/auth");
+    }
   };
 
   purchaseCancelHandler = () => {
     this.setState({
-      purchasing: false
+      purchasing: false,
     });
   };
 
   purchaseContinueHandler = () => {
     this.props.postInit();
     this.props.history.push({
-      pathname: "/checkout"
+      pathname: "/checkout",
     });
   };
 
@@ -80,16 +82,17 @@ class BurgerBuilder extends Component {
           </Modal>
           <Burger ingredients={this.props.ingredients} />
           <BuildControls
-            addIngredient={ingType =>
+            addIngredient={(ingType) =>
               this.props.addIngredient({ ingType: ingType })
             }
-            removeIngredient={ingType =>
+            removeIngredient={(ingType) =>
               this.props.removeIngredient({ ingType: ingType })
             }
             disabled={disabledInfo}
             price={this.props.totalPrice}
             purchasable={this.updatePurchasedState()}
             ordered={this.purchaseHandler}
+            isAuth={this.props.isAuth}
           />
         </Fragment>
       );
@@ -104,6 +107,7 @@ const mapStateToProps = (state) => {
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    isAuth: !!state.auth.token,
   };
 };
 
@@ -111,5 +115,5 @@ export default connect(mapStateToProps, {
   addIngredient,
   removeIngredient,
   fetchIngredients,
-  postInit
+  postInit,
 })(withErrorHandler(BurgerBuilder, axios));

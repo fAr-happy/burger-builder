@@ -1,20 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import "index.css";
+import App from "App";
+import * as serviceWorker from "serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import burgerBuilderReducer from "./store/BurgerBuilder/reducer";
-import contactDataReducer from "./store/ContactData/reducer";
-import ordersReducer from "./store/Orders/reducer";
+import burgerBuilderReducer from "store/BurgerBuilder/reducer";
+import contactDataReducer from "store/ContactData/reducer";
+import ordersReducer from "store/Orders/reducer";
+import authReducer from "store/Auth/reducer";
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerBuilderReducer,
   contactData: contactDataReducer,
-  orders: ordersReducer
+  orders: ordersReducer,
+  auth: authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import styles from "./Modal.module.css";
-import Backdrop from "../Backdrop/Backdrop";
+import Backdrop from "components/UI/Backdrop/Backdrop";
 
 //haji pashamam
 

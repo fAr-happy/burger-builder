@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./Toolbar.module.css";
-import Logo from "../../Logo/Logo";
-import NavigationItems from "../NavigationItems/NavigationItems";
-import DrawerToggle from "../SidaDrawer/DrawerToggle/DrawerToggle";
+import Logo from "components/Logo/Logo";
+import NavigationItems from "components/Navigation/NavigationItems/NavigationItems";
+import DrawerToggle from "components/Navigation/SidaDrawer/DrawerToggle/DrawerToggle";
 
 
 
@@ -12,10 +12,12 @@ const Toolbar = props => {
       <DrawerToggle onClick={props.sideDrawerHandler} />
       <Logo />
       <nav className={styles.DesktopOnly}>
-        <NavigationItems />
+        <NavigationItems isAuthenticated={props.isAuth} />  
       </nav>
     </header>
   );
 };
 
 export default Toolbar;
+
+
